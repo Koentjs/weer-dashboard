@@ -8,6 +8,10 @@ import os
 load_dotenv()
 DB_URL = os.getenv("DB_URL")
 
+# Controleer of de URL werd opgehaald
+if not DB_URL:
+    raise ValueError("DB_URL is niet ingesteld in secrets!")
+
 #maak database connectie
 engine = create_engine(DB_URL)
 
