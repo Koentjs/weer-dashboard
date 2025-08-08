@@ -1,0 +1,30 @@
+name: Run Scheduler
+
+on:
+  schedule:
+    - cron: '5 * * * *'  # elke uur op 5 minuten over het uur
+  workflow_dispatch:
+
+jobs:
+  run-scheduler:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Show current directory and files
+        run: |
+          pwd
+          ls -la
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run scheduler script
+        run: python scheduler.py
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
